@@ -1,6 +1,6 @@
 #include "RPN.hpp"
 
-int main(int ac, char **av)
+int main(int ac, char **av)// reread the subject to confirm that the error should be in the standard error or standard output, i think it should be in the standard error but the subject is not clear about that, so i will put it in the standard output for now
 {
     if (ac != 2)
     {

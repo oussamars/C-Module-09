@@ -8,6 +8,7 @@
 #include <sstream>
 #include <climits>
 #include <ctime>
+#include <set>
 
 
 class PmergeMe
@@ -20,8 +21,8 @@ class PmergeMe
         PmergeMe(const PmergeMe &other);
         PmergeMe &operator=(const PmergeMe &other);
         ~PmergeMe();
-        std::vector<int> getVector() const { return _vector; }
-        std::deque<int> getDeque() const { return _deque; }
+        const std::vector<int>& getVector() const { return _vector; }
+        const std::deque<int>& getDeque() const { return _deque; }
         bool parseInput(int ac, char **av);
         void sortVector();
         void mergeInsertSortVector(std::vector<int> &values);

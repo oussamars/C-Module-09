@@ -38,7 +38,7 @@ void RPN::process(const std::string& input)
         _stack.pop();
     
     if (input.empty())
-        throw RPNException("Error");
+        throw std::runtime_error("Error");
 
     for (size_t i = 0; i < input.size(); i++)
     {
@@ -51,7 +51,7 @@ void RPN::process(const std::string& input)
         else if (input[i] == '+' || input[i] == '-' || input[i] == '/' || input[i] == '*')
         {
             if (_stack.size() < 2)
-                throw RPNException("Error");
+                throw std::runtime_error("Error");
 
             int result;
             int y = _stack.top();
@@ -67,21 +67,19 @@ void RPN::process(const std::string& input)
             if (input[i] == '/')
             {
                 if (y == 0)
-                    throw RPNException("Error");
+                    throw std::runtime_error("Error");
 
                 result = x / y;
             }
             _stack.push(result);
         }
         else
-            throw RPNException("Error");
+            throw std::runtime_error("Error");
 
     }
-    if (_stack.empty())
-        throw RPNException("Error");
 
     if (_stack.size() != 1)
-        throw RPNException("Error");
+        throw std::runtime_error("Error");
 
     std::cout << _stack.top() << std::endl;  
 

@@ -1,4 +1,4 @@
-#include "BitcoinExchange.hpp"
+#include "BitcoinExchange.hpp"//check if you write all the errors in the stdandard error and not std output
 
 bitcoinExchange::bitcoinExchange()
 {
@@ -22,34 +22,38 @@ void bitcoinExchange::loadData(const std::string& filename)
     file.open(filename.c_str());
     if (!file.is_open())
     {
-        std::cout << "Error: could not open file." << std::endl;
+        std::cerr << "Error: could not open file." << std::endl;
         return;
     }
+
     std::string line;
     std::getline(file, line);
+    
     while (std::getline(file, line))
     {
         std::size_t comapos = line.find(',');
         if (comapos == std::string::npos)
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         std::string key = line.substr(0, comapos);
         std::string stringValue = line.substr(comapos + 1);
         key = trim(key);
         stringValue = trim(stringValue);
-        std::stringstream ss(stringValue);
+
+        //we want to convert the string value from a string to a double
+        std::stringstream ss(stringValue); //stringstream is a fake input stream that reads from a string instead of a file or keyboard
         double value;
-        if (!(ss >> value))
+        if (!(ss >> value))//reads the numiric part only
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         char c;
-        if (ss >> c)
+        if (ss >> c)//Is there still something left that I can read? => If yes, that means the input was not a clean number
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         data[key] = value;
@@ -62,66 +66,70 @@ void bitcoinExchange::processInput(const std::string& filename)
     std::ifstream input_file(filename.c_str());
     if (!input_file.is_open())
     {
-        std::cout << "Error: could not open file." << std::endl;
+        std::cerr << "Error: could not open file." << std::endl;
         return;
     }
 
     std::string line;
     std::getline(input_file, line);
+
     while (getline(input_file, line))
     {
         if (line.empty())
             continue;
+
         size_t seperatorpos = line.find('|');
         if (seperatorpos == std::string::npos)
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         std::string key = line.substr(0, seperatorpos);
         std::string stringValue = line.substr(seperatorpos + 1);
         key = trim(key);
         stringValue = trim(stringValue);
+
         std::stringstream ss(stringValue);
         double value;
         if (!(ss >> value))
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         char c;
         if (ss >> c)
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         if (value < 0)
         {
-            std::cout << "Error: not a positive number." << std::endl;
+            std::cerr << "Error: not a positive number." << std::endl;
             continue;
         }
         if (value > 1000)
         {
-            std::cout << "Error: too large a number." << std::endl;
+            std::cerr << "Error: too large a number." << std::endl;
             continue;
         }
         if (!validate_date_format(key))
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
-        if (data.empty())//before using data check if it's empty or not to avoid seg fault
+        if (data.empty())//mloadinach data donc m3ndnach bach ncompariw
         {
-            std::cout << "Error: no data available" << std::endl;
+            std::cerr << "Error: no data available" << std::endl;
             return;
         }
-        std::map<std::string, double>::const_iterator it = data.lower_bound(key);
+        //Since std::map is ordered by keys, lower_bound(key) finds the first position where this key could be inserted without breaking the order.
+        std::map<std::string, double>::const_iterator it = data.lower_bound(key);//why did we use a const iterator
         if (it == data.begin() && it->first != key)
         {
-            std::cout << "Error: no data available" << std::endl;
+            std::cerr << "Error: no data available" << std::endl;
             continue;
         }
-        if (it == data.end() || it->first != key)
+        if (it == data.end() || it->first != key)//input after all database dates
         {
             --it;
         }

@@ -21,8 +21,10 @@ class PmergeMe
         PmergeMe(const PmergeMe &other);
         PmergeMe &operator=(const PmergeMe &other);
         ~PmergeMe();
+
         const std::vector<int>& getVector() const { return _vector; }
         const std::deque<int>& getDeque() const { return _deque; }
+        
         bool parseInput(int ac, char **av);
         void sortVector();
         void mergeInsertSortVector(std::vector<int> &values);

@@ -6,7 +6,6 @@
 #include <stack>
 #include <exception>
 #include <string>
-#include <stdexcept>
 
 class RPN
 {

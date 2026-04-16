@@ -1,10 +1,10 @@
 #include "RPN.hpp"
 
-int main(int ac, char **av) //check if you write all the errors in the stdandard error and not std output
+int main(int ac, char **av)
 {
     if (ac != 2)
     {
-        std::cerr << "Usage: " << av[0] << " <RPN expression>" << std::endl;
+        std::cerr << "Error" << std::endl;
         return 1;
     }
 

@@ -1,19 +1,5 @@
 #include "RPN.hpp"
 
-//why did we use stack as a container for this exercise ?
-// because stack is a data structure that follows the Last In First Out (LIFO) principle
-// and it is used to store the operands and the operators in the RPN expression
-// and it allows us to easily access the top element of the stack which is the last operand
-// and it allows us to easily push and pop elements from the stack which is necessary for the 
-// evaluation of the RPN expression
-
-//we need to handle:
-    //1. Not enough numbers
-    //2. Invalid token
-    //3. Division by zero
-    //4. Too many numbers
-    //5. Empty expression
-
 RPN::RPN()
 {
 }

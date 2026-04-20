@@ -7,6 +7,7 @@ int main(int ac, char **av)
         std::cerr << "Error" << std::endl;
         return 1;
     }
+    
     PmergeMe pmerge;
 
     if (!pmerge.parseInput(ac, av))
@@ -34,8 +35,6 @@ int main(int ac, char **av)
     for (size_t i = 0; i < pmerge.getVector().size(); i++)
         std::cout << pmerge.getVector()[i] << " ";
     std::cout << std::endl;
-
-    //maybe we should check if the vector and the deque have the same output or the same sorted numbers
 
     std::cout << "Time to process a range of " << pmerge.getVector().size()
               << " elements with std::vector : " << vecUs << " us" << std::endl;

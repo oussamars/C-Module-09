@@ -1,4 +1,4 @@
-#include "BitcoinExchange.hpp"//check if you write all the errors in the stdandard error and not std output
+#include "BitcoinExchange.hpp"
 
 bitcoinExchange::bitcoinExchange()
 {
@@ -42,16 +42,15 @@ void bitcoinExchange::loadData(const std::string& filename)
         key = trim(key);
         stringValue = trim(stringValue);
 
-        //we want to convert the string value from a string to a double
-        std::stringstream ss(stringValue); //stringstream is a fake input stream that reads from a string instead of a file or keyboard
+        std::stringstream ss(stringValue);
         double value;
-        if (!(ss >> value))//reads the numiric part only
+        if (!(ss >> value))
         {
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
         char c;
-        if (ss >> c)//Is there still something left that I can read? => If yes, that means the input was not a clean number
+        if (ss >> c)
         {
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
@@ -117,19 +116,18 @@ void bitcoinExchange::processInput(const std::string& filename)
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
-        if (data.empty())//mloadinach data donc m3ndnach bach ncompariw
+        if (data.empty())
         {
             std::cerr << "Error: no data available" << std::endl;
             return;
         }
-        //Since std::map is ordered by keys, lower_bound(key) finds the first position where this key could be inserted without breaking the order.
-        std::map<std::string, double>::const_iterator it = data.lower_bound(key);//why did we use a const iterator
+        std::map<std::string, double>::const_iterator it = data.lower_bound(key);
         if (it == data.begin() && it->first != key)
         {
             std::cerr << "Error: no data available" << std::endl;
             continue;
         }
-        if (it == data.end() || it->first != key)//input after all database dates
+        if (it == data.end() || it->first != key)
         {
             --it;
         }
